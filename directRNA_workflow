@@ -1,0 +1,17 @@
+# This document will introduce the analysis pipeline of direct RNA-Seq data generated from MinION Nanopore sequencing. The raw data format is fast5 file which contains 4000 reads in each of them.
+
+# base calling, fast5 to fastq 
+## All about guppy
+The current state-of-the-art basecaller, current ONT official nerual network based basecaller, translating the electronic raw signal of sequencer into bases, e.g, ATCG..
+Besides base calling, it can also filter low quality reads, clipping ONT adaptors, and calculate methylation probablities per base.
+
+
+## use config file (-c ) to input parameters for guppy
+guppy_basecaller –i ./fast5 –s ./guppy_out –c rna_r9.4.1_10kbps_direct.cfg --num_callers 2 --cpu_threads_per_caller 1
+## or use -f (flow cell type) -k (which kit used)
+guppy_basecaller –i ./fast5 –s ./guppy_out –f FLO-MIN106 -k SQK-RNA002 --num_callers 2 --cpu_threads_per_caller 1
+## combine all fastq files in guppy_out together for the following analysis
+cat *.fastq > all_guppy.fastq
+
+reference:
+https://timkahlke.github.io/LongRead_tutorials/BS_G.html
